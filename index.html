@@ -80,69 +80,35 @@
 
                 var sms = new SimpleMarkerSymbol().setStyle(SimpleMarkerSymbol.STYLE_SQUARE).setColor(new Color([255,0,0,0.5]));
 
-                locations.push({
-                    pt: new Point(-95.3831, 29.7628, new SpatialReference({ wkid: 4326 })),
-                    attr : { "Event": "TechEd 2014" },
-                    infoTemplate : new InfoTemplate("Houston")
-                });
+                locations.push({ x: -95.3831, y: 29.7628, event: "TechEd 2014", loc: "Houston" });
 
-                locations.push({
-                    pt: new Point(-81.2989, 28.4158, new SpatialReference({ wkid: 4326 })),
-                    attr: { "Event": "Disney World" },
-                    infoTemplate: new InfoTemplate("Orlando")
-                });
+                locations.push({ x: -81.2989, y: 28.4158, event: "Disney World", loc: "Orlando" });
 
-                locations.push({
-                    pt: new Point(-90.6053, 29.7225, new SpatialReference({ wkid: 4326 })),
-                    attr: { "Event": "Birth City" },
-                    infoTemplate: new InfoTemplate("Raceland")
-                });
+                locations.push({ x: -90.6053, y: 29.7225, event: "Birth City", loc: "Raceland" });
 
-                locations.push({
-                    pt: new Point(-92.0333, 30.2167, new SpatialReference({ wkid: 4326 })),
-                    attr: { "Event": "Residence" },
-                    infoTemplate: new InfoTemplate("Lafayette")
-                });
+                locations.push({ x: -92.0333, y: 30.2167, event: "Residence", loc: "Lafayette" });
 
-                locations.push({
-                    pt: new Point(-90.8200, 29.7922, new SpatialReference({ wkid: 4326 })),
-                    attr: { "Event": "Previous Residence" },
-                    infoTemplate: new InfoTemplate("Thibodaux")
-                });
+                locations.push({ x: -90.8200, y: 29.7922, event: "Previous Residence", loc: "Thibodaux" });
 
-                locations.push({
-                    pt: new Point(-90.7161, 29.5875, new SpatialReference({ wkid: 4326 })),
-                    attr: { "Event": "Previous Residence" },
-                    infoTemplate: new InfoTemplate("Houma")
-                });
+                locations.push({ x: -90.7161, y: 29.5875, event: "Previous Residence", loc: "Houma" });
 
-                locations.push({
-                    pt: new Point(-83.5114, 35.7144, new SpatialReference({ wkid: 4326 })),
-                    attr: { "Event": "Great Smoky Mountains National Park" },
-                    infoTemplate: new InfoTemplate("Gatlinburg")
-                });
+                locations.push({ x: -95.3831, y: 29.7628, event: "Great Smoky Mountains National Park", loc: "Gatlinburg" });
 
-                locations.push({
-                    pt: new Point(-115.1739, 36.1215, new SpatialReference({ wkid: 4326 })),
-                    attr: { "Event": "Vacation" },
-                    infoTemplate: new InfoTemplate("Las Vegas and Grand Canyon")
-                });
+                locations.push({ x: -115.1739, y: 36.1215, event: "Vacation", loc: "Las Vegas and Grand Canyon" });
 
-                locations.push({
-                    pt: new Point(-74.0059, 40.7127, new SpatialReference({ wkid: 4326 })),
-                    attr: { "Event": "Macy's Day Parade" },
-                    infoTemplate: new InfoTemplate("New York City")
-                });
+                locations.push({ x: -74.0059, y: 40.7127, event: "Macy's Day Parade", loc: "New York City" });
 
-                locations.push({
-                    pt: new Point(-77.0367, 38.8951, new SpatialReference({ wkid: 4326 })),
-                    attr: { "Event": "4th of July" },
-                    infoTemplate: new InfoTemplate("Washington D.C.")
-                });
+                locations.push({ x: -77.0367, y: 38.8951, event: "4th of July", loc: "Washington D.C." });
 
                 map.on("load", function () {
                     for (var i = 0; i < locations.length; i++) {
-                        map.graphics.add(new Graphic(locations[i].pt, sms, locations[i].attr, locations[i].infoTemplate));
+                        map.graphics.add(
+                            new Graphic(
+                                new Point(locations[i].x, locations[i].y, new SpatialReference({ wkid: 4326 })),
+                                sms,
+                                { "Event": locations[i].event },
+                                new InfoTemplate(locations[i].loc)
+                            ));
                     }
                 });
         });

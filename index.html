@@ -20,7 +20,9 @@
         .fullWidth {
             width: 100%;
         }
-
+        .title {
+            font-weight: bold;
+        }
         .center {
             text-align: center;
             display: block;
@@ -30,6 +32,7 @@
 
         .link {
             color: white;
+            font-size: 20px;
         }
 
         .initialBlock {
@@ -50,24 +53,98 @@
     <div class="initialBlock fullWidth center">
         <img class="center" src="./images/icon.png" width="288" height="129" alt="" />
     </div>
+    <br /><br />
     <div>
-        <div id="map"></div>
-    </div>
-    <div>
-        <a class="initialBlock link center left" href="https://github.com/cfanguy">Profile</a>
-        <a class="link center right" href="https://github.com/cfanguy?tab=repositories">Repositories</a>
+        <div class="left">
+            <br />
+            <br />
+            <a class="initialBlock link" href="https://github.com/cfanguy">Profile</a><br /><br />
+            <a class="link" href="https://github.com/cfanguy?tab=repositories">Repositories</a>
+        </div>
+        <span class="link title right">Places I've Been:</span><br /><br />
+        <div id="map" style=" width: 75%;height: 600px;" class="right"></div>
     </div>
 
     <script src="http://js.arcgis.com/3.9/"></script>
     <script>
-        var map;
+        require(["esri/map", "esri/geometry/Point", "esri/symbols/SimpleMarkerSymbol",
+  "esri/Color", "esri/InfoTemplate", "esri/graphic", "esri/SpatialReference", "dojo/domReady!"],
+            function (Map, Point, SimpleMarkerSymbol, Color, InfoTemplate, Graphic, SpatialReference) {
+                var map = new Map("map", {
+                    basemap: "topo",
+                    center: [-103.12, 36.07], // longitude, latitude
+                    zoom: 4
+                });
 
-        require(["esri/map", "dojo/domReady!"], function (Map) {
-            map = new Map("map", {
-                basemap: "topo",
-                center: [-103.12, 36.07], // longitude, latitude
-                zoom: 4
-            });
+                var locations = [];
+
+                var sms = new SimpleMarkerSymbol().setStyle(SimpleMarkerSymbol.STYLE_SQUARE).setColor(new Color([255,0,0,0.5]));
+
+                locations.push({
+                    pt: new Point(-95.3831, 29.7628, new SpatialReference({ wkid: 4326 })),
+                    attr : { "Event": "TechEd 2014" },
+                    infoTemplate : new InfoTemplate("Houston")
+                });
+
+                locations.push({
+                    pt: new Point(-81.2989, 28.4158, new SpatialReference({ wkid: 4326 })),
+                    attr: { "Event": "Disney World" },
+                    infoTemplate: new InfoTemplate("Orlando")
+                });
+
+                locations.push({
+                    pt: new Point(-90.6053, 29.7225, new SpatialReference({ wkid: 4326 })),
+                    attr: { "Event": "Birth City" },
+                    infoTemplate: new InfoTemplate("Raceland")
+                });
+
+                locations.push({
+                    pt: new Point(-92.0333, 30.2167, new SpatialReference({ wkid: 4326 })),
+                    attr: { "Event": "Residence" },
+                    infoTemplate: new InfoTemplate("Lafayette")
+                });
+
+                locations.push({
+                    pt: new Point(-90.8200, 29.7922, new SpatialReference({ wkid: 4326 })),
+                    attr: { "Event": "Previous Residence" },
+                    infoTemplate: new InfoTemplate("Thibodaux")
+                });
+
+                locations.push({
+                    pt: new Point(-90.7161, 29.5875, new SpatialReference({ wkid: 4326 })),
+                    attr: { "Event": "Previous Residence" },
+                    infoTemplate: new InfoTemplate("Houma")
+                });
+
+                locations.push({
+                    pt: new Point(-83.5114, 35.7144, new SpatialReference({ wkid: 4326 })),
+                    attr: { "Event": "Great Smoky Mountains National Park" },
+                    infoTemplate: new InfoTemplate("Gatlinburg")
+                });
+
+                locations.push({
+                    pt: new Point(-115.1739, 36.1215, new SpatialReference({ wkid: 4326 })),
+                    attr: { "Event": "Vacation" },
+                    infoTemplate: new InfoTemplate("Las Vegas and Grand Canyon")
+                });
+
+                locations.push({
+                    pt: new Point(-74.0059, 40.7127, new SpatialReference({ wkid: 4326 })),
+                    attr: { "Event": "Macy's Day Parade" },
+                    infoTemplate: new InfoTemplate("New York City")
+                });
+
+                locations.push({
+                    pt: new Point(-77.0367, 38.8951, new SpatialReference({ wkid: 4326 })),
+                    attr: { "Event": "4th of July" },
+                    infoTemplate: new InfoTemplate("Washington D.C.")
+                });
+
+                map.on("load", function () {
+                    for (var i = 0; i < locations.length; i++) {
+                        map.graphics.add(new Graphic(locations[i].pt, sms, locations[i].attr, locations[i].infoTemplate));
+                    }
+                });
         });
     </script>
 </body>

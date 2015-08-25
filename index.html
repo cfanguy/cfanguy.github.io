@@ -1,153 +1,112 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>cfanguy github</title>
-    <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
-    <style type="text/css">
-        html, body, #map {
-            height: 100%;
-            width: 100%;
-            background-color:black;
-            margin: 0;
-            padding: 0;
-          }
+    <head>
+        <title>cfanguy github</title>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+        <style type="text/css">
+            html, body, #map {
+                height: 100%;
+                width: 100%;
+                background-color:black;
+                margin: 0;
+                padding: 0;
+              }
 
-        #title {
-            font-weight: bold;
-            color: white;
-        }
+            #title {
+                font-weight: bold;
+                color: white;
+            }
 
-        .fullWidth {
-            width: 100%;
-        }
-        .title {
-            font-weight: bold;
-        }
-        .center {
-            text-align: center;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+            .fullWidth {
+                width: 100%;
+            }
+            .title {
+                font-weight: bold;
+            }
+            .center {
+                text-align: center;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
 
-        .link {
-            color: white;
-            font-size: 20px;
-        }
+            .link {
+                color: white;
+                font-size: 20px;
+            }
 
-        .initialBlock {
-            margin-top: 10px;
-        }
-        .left {
-            float: left;
-        }
-        .right {
-            float: right;
-        }
-    </style>
-</head>
-<body>
-    <div>
-        <span id="title" class="center">Chad Fanguy's Github</span>
-    </div>
-    <div class="initialBlock fullWidth center">
-        <img class="center" src="./images/icon.png" width="288" height="129" alt="" />
-    </div>
-    <br /><br />
-    <div>
-        <div class="left">
-            <br />
-            <br />
-            <a class="initialBlock link" href="https://github.com/cfanguy">Profile</a><br /><br />
-            <a class="link" href="https://github.com/cfanguy?tab=repositories">Repositories</a>
+            .initialBlock {
+                margin-top: 10px;
+            }
+            .left {
+                float: left;
+            }
+            .right {
+                float: right;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <span id="title" class="center">Chad Fanguy's Github</span>
         </div>
-        <span class="link title right">Places I've Been:</span><br /><br />
-        <div id="map" style=" width: 75%;height: 600px;" class="right"></div>
-    </div>
+        <div class="initialBlock fullWidth center">
+            <img class="center" src="./images/icon.png" width="288" height="129" alt="" />
+        </div>
+        <br /><br />
+        <div>
+            <div class="left">
+                <br />
+                <br />
+                <a class="initialBlock link" href="https://github.com/cfanguy">Profile</a><br /><br />
+                <a class="link" href="https://github.com/cfanguy?tab=repositories">Repositories</a>
+            </div>
+            <span class="link title right">Places I've Been:</span><br /><br />
+            <div id="map" style=" width: 75%;height: 600px;" class="right"></div>
+        </div>
 
-    <script src="http://js.arcgis.com/3.9/"></script>
-    <script>
-        require(["esri/map", "esri/geometry/Point", "esri/symbols/SimpleMarkerSymbol",
-  "esri/Color", "esri/InfoTemplate", "esri/graphic", "esri/SpatialReference", "dojo/domReady!"],
-            function (Map, Point, SimpleMarkerSymbol, Color, InfoTemplate, Graphic, SpatialReference) {
-                var map = new Map("map", {
-                    basemap: "topo",
-                    center: [-103.12, 36.07], // longitude, latitude
-                    zoom: 4
-                });
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+        <script>
+            var map = L.map('map').setView([34.52466147177172, -93.42773437499999], 5);
 
-                var locations = [];
+            L.tileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Data, imagery and map information provided by MapQuest, OpenStreetMap <http://www.openstreetmap.org/copyright> and contributors, ODbL <http://wiki.openstreetmap.org/wiki/Legal_FAQ#3a._I_would_like_to_use_OpenStreetMap_maps._How_should_I_credit_you.3F> ',
+                maxZoom: 18
+            }).addTo(map);
 
-                var sms = new SimpleMarkerSymbol().setStyle(SimpleMarkerSymbol.STYLE_SQUARE).setColor(new Color([255,0,0,0.5]));
+            var locations = [];
 
-                locations.push({ x: -95.3831, y: 29.7628, event: "TechEd 2014", loc: "Houston" });
+            locations.push({ x: -95.3831, y: 29.7628, event: "TechEd 2014", loc: "Houston" });
+            locations.push({ x: -81.2989, y: 28.4158, event: "Disney World", loc: "Orlando" });
+            locations.push({ x: -90.6053, y: 29.7225, event: "Birth City", loc: "Raceland" });
+            locations.push({ x: -92.0333, y: 30.2167, event: "Residence", loc: "Lafayette" });
+            locations.push({ x: -90.8200, y: 29.7922, event: "Family", loc: "Thibodaux" });
+            locations.push({ x: -90.7161, y: 29.5875, event: "Family", loc: "Houma" });
+            locations.push({ x: -83.5114, y: 35.7144, event: "Great Smoky Mountains National Park", loc: "Gatlinburg" });
+            locations.push({ x: -115.1739, y: 36.1215, event: "Vacation", loc: "Las Vegas and Grand Canyon" });
+            locations.push({ x: -74.0059, y: 40.7127, event: "Macy's Day Parade", loc: "New York City" });
+            locations.push({ x: -77.0367, y: 38.8951, event: "4th of July", loc: "Washington D.C." });
+            locations.push({ x: -98.5000, y: 29.4167, event: "Vacation", loc: "San Antonio" });
+            locations.push({ x: -88.9278, y: 30.4119, event: "Vacation", loc: "Biloxi" });
+            locations.push({ x: -87.8864, y: 30.6311, event: "Work", loc: "Daphne" });
+            locations.push({ x: -93.7472, y: 32.5147, event: "Work", loc: "Shreveport" });
+            locations.push({ x: -86.7833, y: 36.1667, event: "Vacation", loc: "Nashville" });
+            locations.push({ x: -82.5558, y: 35.5800, event: "Biltmore Estate", loc: "Ashville" });
+            locations.push({ x: -85.2672, y: 35.0456, event: "Vacation", loc: "Chattanooga" });
+            locations.push({ x: -84.2533, y: 30.4550, event: "Vacation", loc: "Tallahassee" });
+            locations.push({ x: -82.5458, y: 27.7625, event: "Vacation", loc: "Tampa" });
+            locations.push({ x: -80.2241, y: 25.7877, event: "Vacation", loc: "Miami" });
+            locations.push({ x: -86.5850, y: 34.7300, event: "Vacation", loc: "Huntsville" });
+            locations.push({ x: -90.0500, y: 29.9667, event: "Conventions and Random Visits", loc: "New Orleans" });
+            locations.push({ x: -91.1400, y: 30.4500, event: "Family", loc: "Baton Rouge" });
+            locations.push({ x: -91.1972, y: 29.7008, event: "Family", loc: "Morgan City Area" });
+            locations.push({ x: -93.2086, y: 30.2147, event: "Conventions", loc: "Lake Charles" });
+            locations.push({ x: -90.4656, y: 30.5044, event: "Renaissance Festival", loc: "Hammond" });
+            locations.push({ x: -117.1625, y: 32.7150, event: "ESRI User Conference 2015", loc: "San Diego" });
 
-                locations.push({ x: -81.2989, y: 28.4158, event: "Disney World", loc: "Orlando" });
-
-                locations.push({ x: -90.6053, y: 29.7225, event: "Birth City", loc: "Raceland" });
-
-                locations.push({ x: -92.0333, y: 30.2167, event: "Residence", loc: "Lafayette" });
-
-                locations.push({ x: -90.8200, y: 29.7922, event: "Previous Residence", loc: "Thibodaux" });
-
-                locations.push({ x: -90.7161, y: 29.5875, event: "Previous Residence", loc: "Houma" });
-
-                locations.push({ x: -83.5114, y: 35.7144, event: "Great Smoky Mountains National Park", loc: "Gatlinburg" });
-
-                locations.push({ x: -115.1739, y: 36.1215, event: "Vacation", loc: "Las Vegas and Grand Canyon" });
-
-                locations.push({ x: -74.0059, y: 40.7127, event: "Macy's Day Parade", loc: "New York City" });
-
-                locations.push({ x: -77.0367, y: 38.8951, event: "4th of July", loc: "Washington D.C." });
-
-                locations.push({ x: -98.5000, y: 29.4167, event: "Vacation", loc: "San Antonio" });
-
-                locations.push({ x: -88.9278, y: 30.4119, event: "Vacation", loc: "Biloxi" });
-
-                locations.push({ x: -87.8864, y: 30.6311, event: "Work", loc: "Daphne" });
-
-                locations.push({ x: -93.7472, y: 32.5147, event: "Work", loc: "Shreveport" });
-
-                locations.push({ x: -86.7833, y: 36.1667, event: "Vacation", loc: "Nashville" });
-
-                locations.push({ x: -82.5558, y: 35.5800, event: "Biltmore Estate", loc: "Ashville" });
-
-                locations.push({ x: -85.2672, y: 35.0456, event: "Vacation", loc: "Chattanooga" });
-
-                locations.push({ x: -84.2533, y: 30.4550, event: "Vacation", loc: "Tallahassee" });
-
-                locations.push({ x: -82.5458, y: 27.7625, event: "Vacation", loc: "Tampa" });
-
-                locations.push({ x: -80.2241, y: 25.7877, event: "Vacation", loc: "Miami" });
-
-                locations.push({ x: -97.1558, y: 31.5514, event: "Family", loc: "Tallahassee" });
-
-                locations.push({ x: -86.5850, y: 34.7300, event: "Vacation", loc: "Huntsville" });
-
-                locations.push({ x: -90.0500, y: 29.9667, event: "Conventions and Random Visits", loc: "New Orleans" });
-
-                locations.push({ x: -91.1400, y: 30.4500, event: "Family", loc: "Baton Rouge" });
-
-                locations.push({ x: -91.1972, y: 29.7008, event: "Family", loc: "Morgan City Area" });
-
-                locations.push({ x: -93.2086, y: 30.2147, event: "Conventions", loc: "Lake Charles" });
-
-                locations.push({ x: -90.4656, y: 30.5044, event: "Renaissance Festival", loc: "Hammond" });
-
-                locations.push({ x: -117.1625, y: 32.7150, event: "ESRI User Conference 2015", loc: "San Diego" });
-
-                map.on("load", function () {
-                    for (var i = 0; i < locations.length; i++) {
-                        map.graphics.add(
-                            new Graphic(
-                                new Point(locations[i].x, locations[i].y, new SpatialReference({ wkid: 4326 })),
-                                sms,
-                                { "Event": locations[i].event },
-                                new InfoTemplate(locations[i].loc)
-                            ));
-                    }
-                });
-        });
-    </script>
-</body>
+            for (var i = 0; i < locations.length; i++) {
+                L.marker([locations[i].y, locations[i].x]).addTo(map).bindPopup(locations[i].loc + '<br>' + locations[i].event);
+            }
+        </script>
+    </body>
 </html>

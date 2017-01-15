@@ -118,9 +118,10 @@
             locations.push({ x: -83.5114, y: 35.7144, event: "Great Smoky Mountains National Park", loc: "Gatlinburg" });
 
             // Texas
+            locations.push({ x: -96.7970, y: 32.7767, event: "Airport", loc: "Dallas" });
             locations.push({ x: -98.5000, y: 29.4167, event: "Vacation", loc: "San Antonio" });
             locations.push({ x: -95.3831, y: 29.7628, event: "TechEd 2014", loc: "Houston" });
-            locations.push({ x: 97.7431, y: 30.2672, event: "Work", loc: "Austin" });
+            locations.push({ x: -97.7431, y: 30.2672, event: "Work", loc: "Austin" });
 
             for (var i = 0; i < locations.length; i++) {
                 L.marker([locations[i].y, locations[i].x]).addTo(map).bindPopup(locations[i].loc + '<br>' + locations[i].event);

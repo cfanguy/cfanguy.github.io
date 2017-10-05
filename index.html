@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>cfanguy github</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
         <style type="text/css">
             html, body, #map {
                 height: 100%;
@@ -10,7 +10,7 @@
                 background-color:black;
                 margin: 0;
                 padding: 0;
-              }
+            }
 
             #title {
                 font-weight: bold;
@@ -20,9 +20,11 @@
             .fullWidth {
                 width: 100%;
             }
+
             .title {
                 font-weight: bold;
             }
+
             .center {
                 text-align: center;
                 display: block;
@@ -30,7 +32,7 @@
                 margin-right: auto;
             }
 
-            .link {
+            .text {
                 color: white;
                 font-size: 20px;
             }
@@ -38,35 +40,54 @@
             .initialBlock {
                 margin-top: 10px;
             }
-            .left {
-                float: left;
+
+            .borderRad {
+                border-radius: 4px;
             }
-            .right {
-                float: right;
+
+            .marginTab {
+                margin-left: 15px;
+            }
+            
+            .marginSpace {
+                margin-left: 5px;
+            }
+
+            .mapContainer {
+                margin-top:4px;
+                width: 96%;
+                margin-left: auto;
+                margin-right: auto;
             }
         </style>
     </head>
     <body>
         <div>
-            <span id="title" class="center">Chad Fanguy's Github</span>
+            <span id="title" class="center">Chad Fanguy's Github.io</span>
         </div>
         <div class="initialBlock fullWidth center">
             <img class="center" src="./images/icon.png" width="288" height="129" alt="" />
         </div>
-        <br /><br />
+        <br><br>
         <div>
-            <div class="left">
-                <br />
-                <br />
-                <a class="initialBlock link" href="https://github.com/cfanguy">Profile</a><br /><br />
-                <a class="link" href="https://github.com/cfanguy?tab=repositories">Repositories</a><br />
-                <a class="link" href="http://cfanguy.github.io/platformer/">RBI</a>
+            <div>
+                <br><br>
+                <span class="initialBlock text">Links:</span><br>
+                <a class="marginTab text" href="https://github.com/cfanguy">Github</a><br>
+                <a class="marginTab text" href="https://cfanguy.wordpress.com/">Blog</a><br><br>
+                <a class="marginTab text" title="Rock Bottom Innovations" href="http://cfanguy.github.io/platformer/">RBI</a>
+                <span class="marginSpace text">Rock Bottom Innovations (RBI) was a simple HTML5 game I made to provide a simple test of what HTML5 Canvas could achieve.</span>
             </div>
-            <span class="link title right">Places I've Been:</span><br /><br />
-            <div id="map" style=" width: 75%;height: 600px;" class="right"></div>
+            <br><br>
+            <div>
+                <span class="text title">Locations I Have Visited:</span><br>
+                <div class="mapContainer">
+                    <div id="map" style="width: 100%;height: 550px;" class="borderRad"></div>
+                </div>
+            </div>
         </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
         <script>
             var map = L.map('map').setView([34.52466147177172, -93.42773437499999], 5);
 
@@ -112,13 +133,13 @@
             locations.push({ x: -115.1739, y: 36.1215, event: "Vacation", loc: "Las Vegas and Grand Canyon" });
 
             // New York
-            locations.push({ x: -77.0367, y: 38.8951, event: "4th of July", loc: "Washington D.C." });
+            locations.push({ x: -77.0367, y: 38.8951, event: "4th of July and Work", loc: "Washington D.C." });
             locations.push({ x: -74.0059, y: 40.7127, event: "Macy's Day Parade", loc: "New York City" });
 
             // Tennessee
             locations.push({ x: -86.7833, y: 36.1667, event: "Vacation", loc: "Nashville" });
             locations.push({ x: -85.2672, y: 35.0456, event: "Vacation", loc: "Chattanooga" });
-            locations.push({ x: -83.5114, y: 35.7144, event: "Great Smoky Mountains National Park", loc: "Gatlinburg" });
+            locations.push({ x: -83.5114, y: 35.7144, event: "Great Smoky Mountains National Park Visit", loc: "Gatlinburg" });
 
             // Texas
             locations.push({ x: -96.7970, y: 32.7767, event: "Airport", loc: "Dallas" });

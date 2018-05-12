@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>cfanguy github</title>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+        <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
         <style type="text/css">
             html, body, #map {
                 height: 100%;
@@ -68,7 +68,6 @@
         <div class="initialBlock fullWidth center">
             <img class="center" src="./images/icon.png" width="288" height="129" alt="" />
         </div>
-        <br><br>
         <div>
             <div>
                 <br><br>
@@ -87,15 +86,8 @@
             </div>
         </div>
 
-        <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
         <script>
-            var map = L.map('map').setView([34.52466147177172, -93.42773437499999], 5);
-
-            L.tileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: 'Data, imagery and map information provided by MapQuest, OpenStreetMap <http://www.openstreetmap.org/copyright> and contributors, ODbL <http://wiki.openstreetmap.org/wiki/Legal_FAQ#3a._I_would_like_to_use_OpenStreetMap_maps._How_should_I_credit_you.3F> ',
-                maxZoom: 18
-            }).addTo(map);
-
             var locations = [];
 
             // Alabama
@@ -147,9 +139,70 @@
             locations.push({ x: -95.3831, y: 29.7628, event: "MS TechEd 2014", loc: "Houston" });
             locations.push({ x: -97.7431, y: 30.2672, event: "Work", loc: "Austin" });
 
-            for (var i = 0; i < locations.length; i++) {
-                L.marker([locations[i].y, locations[i].x]).addTo(map).bindPopup(locations[i].loc + '<br>' + locations[i].event);
-            }
+            mapboxgl.accessToken = 'pk.eyJ1IjoiY2Zhbmd1eSIsImEiOiJjamgybzQ1MjYwN2VpMnFvM2Z6czhpbHZsIn0.aqLEqzNIZ9K4tsOc_Z01BA';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/light-v9',
+                center: [-95.00956023296817, 33.43899377692047],
+                zoom: 3.9,
+                pitch: 60
+            });
+
+            map.on('load', function() {
+                var features = [];
+
+                for (var i = 0; i < locations.length; i++) {
+                    features.push({
+                        "type": "Feature",
+                        "properties": {
+                            "description": "<span>" + locations[i].loc + " - " + locations[i].event + "<span>",
+                            "icon": "marker"
+                        },
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [locations[i].x, locations[i].y]
+                        }
+                    });
+                }
+
+                map.addLayer({
+                    "id": "places",
+                    "type": "symbol",
+                    "source": {
+                        "type": "geojson",
+                        "data": {
+                            "type": "FeatureCollection",
+                            "features": features
+                        }
+                    },
+                    "layout": {
+                        "icon-image": "{icon}-15",
+                        "icon-allow-overlap": true
+                    }
+                });
+
+                map.on('click', 'places', function (e) {
+                    var coordinates = e.features[0].geometry.coordinates.slice();
+                    var description = e.features[0].properties.description;
+
+                    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                    }
+
+                    new mapboxgl.Popup()
+                        .setLngLat(coordinates)
+                        .setHTML(description)
+                        .addTo(map);
+                });
+
+                map.on('mouseenter', 'places', function () {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                map.on('mouseleave', 'places', function () {
+                    map.getCanvas().style.cursor = '';
+                });
+            });
         </script>
     </body>
 </html>

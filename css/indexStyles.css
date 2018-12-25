@@ -1,0 +1,55 @@
+html, body, #map {
+    height: 100%;
+    width: 100%;
+    background-color:black;
+    margin: 0;
+    padding: 0;
+}
+
+#title {
+    font-weight: bold;
+    color: white;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.center {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text {
+    color: white;
+    font-size: 20px;
+}
+
+.initialBlock {
+    margin-top: 10px;
+}
+
+.borderRad {
+    border-radius: 4px;
+}
+
+.marginTab {
+    margin-left: 15px;
+}
+
+.marginSpace {
+    margin-left: 5px;
+}
+
+.mapContainer {
+    margin-top:4px;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+}

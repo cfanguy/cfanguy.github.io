@@ -9,6 +9,7 @@ html, body, #map {
 #title {
     font-weight: bold;
     color: white;
+    margin-top: 15px;
 }
 
 .fullWidth {
@@ -39,12 +40,8 @@ html, body, #map {
     border-radius: 4px;
 }
 
-.marginTab {
-    margin-left: 15px;
-}
-
-.marginSpace {
-    margin-left: 5px;
+.addMargin {
+    margin: 0 10px 0 10px;
 }
 
 .mapContainer {

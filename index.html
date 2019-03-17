@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>cfanguy github.io</title>
-        <link href='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
+        <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
         <link rel="stylesheet" type="text/css" href="css/indexStyles.css">
     </head>
     <body>
@@ -13,24 +13,23 @@
             <img class="center" src="./images/icon.png" width="288" height="129" alt="" />
         </div>
         <div>
-            <div>
-                <br><br>
-                <span class="initialBlock text">Links:</span><br>
-                <a class="marginTab text" href="https://github.com/cfanguy">Github</a><br>
-                <a class="marginTab text" href="https://cfanguy.wordpress.com/">Blog</a><br><br>
-                <a class="marginTab text" title="Rock Bottom Innovations" href="http://cfanguy.github.io/platformer/">RBI</a>
-                <span class="marginSpace text">Rock Bottom Innovations (RBI) was a simple HTML5 game made to test HTML5 Canvas.</span>
+            <div class="fullWidth center">
+                <br>
+                <a class="text addMargin" href="https://github.com/cfanguy">Github</a>
+                <a class="text addMargin" href="https://cfanguy.wordpress.com/">Blog</a>
+                <a class="text addMargin" href="http://cfanguy.github.io/platformer/">Rock Bottom Innovations Game</a>
+                <a class="text addMargin" href="https://cfanguy.github.io/other/drawings.html">Drawings</a>
             </div>
-            <br><br>
-            <div>
+            <br>
+            <div style="width: 100%">
                 <span class="text title">Locations I Have Visited (3D Map Framework by MapBox):</span><br>
-                <div class="mapContainer">
-                    <div id="map" style="width: 100%;height: 550px;" class="borderRad"></div>
+                <div class="mapContainer" style="width: 100%;">
+                    <div id="map" style="height: 550px;" class="borderRad"></div>
                 </div>
             </div>
         </div>
 
-        <script src='https://api.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
+        <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
         <script>
             var locations = [];
 
@@ -88,7 +87,7 @@
             mapboxgl.accessToken = 'pk.eyJ1IjoiY2Zhbmd1eSIsImEiOiJjamgybzQ1MjYwN2VpMnFvM2Z6czhpbHZsIn0.aqLEqzNIZ9K4tsOc_Z01BA';
             var map = new mapboxgl.Map({
                 container: 'map',
-                style: 'mapbox://styles/mapbox/light-v9',
+                style: 'mapbox://styles/mapbox/basic-v9',
                 center: [-95.00956023296817, 33.43899377692047],
                 zoom: 3.9,
                 pitch: 60
@@ -148,6 +147,8 @@
                 map.on('mouseleave', 'places', function () {
                     map.getCanvas().style.cursor = '';
                 });
+
+                map.addControl(new mapboxgl.NavigationControl());
             });
         </script>
     </body>

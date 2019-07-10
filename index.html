@@ -31,101 +31,82 @@
         </div>
 
         <script src='https://api.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
-		<script src='http://mystical-app-246303.appspot.com/api/values'></script>
+		<script src='locationList.js'></script>
         
         <script>
-		
-			function loadDoc() {
-				var xhttp = new XMLHttpRequest();
-				xhttp.onreadystatechange = function() {
-					drawMap(this.responseText);
-				};
-				xhttp.open("GET", "https://cors-anywhere.herokuapp.com/https://mystical-app-246303.appspot.com/api/values", true);
-				xhttp.send();
+			var locations = [];
+			for(var i in data) {
+				var item = data[i];
+
+				locations.push({ x: item.x, y: item.y, event: item.event, loc: item.city });
 			}
 
-			loadDoc();
-			function drawMap(jsonString){
-				var data;
-				try{
-					data = JSON.parse(jsonString);
-				}
-				catch{}
-			
-				var locations = [];
-				for(var i in data) {
-					var item = data[i];
+			mapboxgl.accessToken = 'pk.eyJ1IjoiY2Zhbmd1eSIsImEiOiJjamgybzQ1MjYwN2VpMnFvM2Z6czhpbHZsIn0.aqLEqzNIZ9K4tsOc_Z01BA';
+			var map = new mapboxgl.Map({
+				container: 'map',
+				style: 'mapbox://styles/mapbox/basic-v9',
+				center: [-95.00956023296817, 33.43899377692047],
+				zoom: 3.9,
+				pitch: 60
+			});
 
-					locations.push({ x: item.x, y: item.y, event: item.event, loc: item.city });
+			map.on('load', function() {
+				var features = [];
+
+				for (var i = 0; i < locations.length; i++) {
+					features.push({
+						"type": "Feature",
+						"properties": {
+							"description": "<span>" + locations[i].loc + " - " + locations[i].event + "<span>",
+							"icon": "marker"
+						},
+						"geometry": {
+							"type": "Point",
+							"coordinates": [locations[i].x, locations[i].y]
+						}
+					});
 				}
 
-				mapboxgl.accessToken = 'pk.eyJ1IjoiY2Zhbmd1eSIsImEiOiJjamgybzQ1MjYwN2VpMnFvM2Z6czhpbHZsIn0.aqLEqzNIZ9K4tsOc_Z01BA';
-				var map = new mapboxgl.Map({
-					container: 'map',
-					style: 'mapbox://styles/mapbox/basic-v9',
-					center: [-95.00956023296817, 33.43899377692047],
-					zoom: 3.9,
-					pitch: 60
+				map.addLayer({
+					"id": "places",
+					"type": "symbol",
+					"source": {
+						"type": "geojson",
+						"data": {
+							"type": "FeatureCollection",
+							"features": features
+						}
+					},
+					"layout": {
+						"icon-image": "{icon}-15",
+						"icon-allow-overlap": true
+					}
 				});
 
-				map.on('load', function() {
-					var features = [];
+				map.on('click', 'places', function (e) {
+					var coordinates = e.features[0].geometry.coordinates.slice();
+					var description = e.features[0].properties.description;
 
-					for (var i = 0; i < locations.length; i++) {
-						features.push({
-							"type": "Feature",
-							"properties": {
-								"description": "<span>" + locations[i].loc + " - " + locations[i].event + "<span>",
-								"icon": "marker"
-							},
-							"geometry": {
-								"type": "Point",
-								"coordinates": [locations[i].x, locations[i].y]
-							}
-						});
+					while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+						coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
 					}
 
-					map.addLayer({
-						"id": "places",
-						"type": "symbol",
-						"source": {
-							"type": "geojson",
-							"data": {
-								"type": "FeatureCollection",
-								"features": features
-							}
-						},
-						"layout": {
-							"icon-image": "{icon}-15",
-							"icon-allow-overlap": true
-						}
-					});
-
-					map.on('click', 'places', function (e) {
-						var coordinates = e.features[0].geometry.coordinates.slice();
-						var description = e.features[0].properties.description;
-
-						while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-							coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-						}
-
-						new mapboxgl.Popup()
-							.setLngLat(coordinates)
-							.setHTML(description)
-							.addTo(map);
-					});
-
-					map.on('mouseenter', 'places', function () {
-						map.getCanvas().style.cursor = 'pointer';
-					});
-
-					map.on('mouseleave', 'places', function () {
-						map.getCanvas().style.cursor = '';
-					});
-
-					map.addControl(new mapboxgl.NavigationControl());
+					new mapboxgl.Popup()
+						.setLngLat(coordinates)
+						.setHTML(description)
+						.addTo(map);
 				});
-			}
+
+				map.on('mouseenter', 'places', function () {
+					map.getCanvas().style.cursor = 'pointer';
+				});
+
+				map.on('mouseleave', 'places', function () {
+					map.getCanvas().style.cursor = '';
+				});
+
+				map.addControl(new mapboxgl.NavigationControl());
+			});
         </script>
     </body>
 </html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<meta charset="UTF-8"> 
+<html>
+    <head>
+        <title>Visited</title>
+        <link rel="stylesheet" type="text/css" href="../css/indexStyles.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+			integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+			crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+			integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+			crossorigin=""></script>
+    </head>
+    <body>
+        <div style="width: 100%; height: 100%;">
+			<div id="map" style="width: 100%; height: 100%;"></div>
+        </div>
+        
+        <script>
+			var corner1 = L.latLng(-15, -15),
+			corner2 = L.latLng(195, 195),
+			bounds = L.latLngBounds(corner1, corner2);
+
+			var map = L.map('map', {
+				maxBounds: bounds,
+				maxBoundsViscosity: 1.0,
+				minZoom: 3,
+				maxZoom: 5
+			}).setView([65, 90], 3);
+
+			var imageUrl = '../images/dndmap/Navitas.jpg',
+				imageBounds = [[0, 0], [180, 180]];
+
+			L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
+			
+			var locations = [];
+			locations.push({ lat: 42.80, lng: 64.5, image: "../images/dndmap/Orsus_New_Navitas.png" });
+
+			for (var i = 0; i < locations.length; i++) {
+				var circle = L.circle([locations[i].lat, locations[i].lng], {
+					color: 'green',
+					fillColor: '000',
+					fillOpacity: 0.1,
+					radius: 200000
+				}).addTo(map);
+				circle.bindPopup("<div style='width:300px;height:165px;'><img style='width:295px;' src='" + locations[i].image + "'/></div>")
+			}
+        </script>
+    </body>
+</html>

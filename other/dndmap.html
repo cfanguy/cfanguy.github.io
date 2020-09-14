@@ -35,16 +35,23 @@
 
 			
 			var locations = [];
-			locations.push({ lat: 42.80, lng: 64.5, image: "../images/dndmap/Orsus_New_Navitas.png" });
+			locations.push({ lat: 42.80, lng: 64.5, type: "town", image: "../images/dndmap/Orsus_New_Navitas.png" });
+			locations.push({ lat: 50.80, lng: 61.5, type: "waypoint", image: "../images/dndmap/Caves.png" });
 
 			for (var i = 0; i < locations.length; i++) {
-				var circle = L.circle([locations[i].lat, locations[i].lng], {
-					color: 'green',
-					fillColor: '000',
-					fillOpacity: 0.1,
-					radius: 200000
-				}).addTo(map);
-				circle.bindPopup("<div style='width:300px;height:165px;'><img style='width:295px;' src='" + locations[i].image + "'/></div>")
+				var marker;
+				if(locations[i].type == "town") {
+					var marker = L.circle([locations[i].lat, locations[i].lng], {
+						color: 'green',
+						fillColor: '000',
+						fillOpacity: 0.1,
+						radius: 160000
+					}).addTo(map);
+				}
+				if(locations[i].type == "waypoint") {
+					marker = L.marker([locations[i].lat, locations[i].lng]).addTo(map);
+				}
+				marker.bindPopup("<div style='width:300px;height:165px;'><img style='width:255px;' src='" + locations[i].image + "'/></div>")
 			}
         </script>
     </body>

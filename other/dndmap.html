@@ -2,7 +2,7 @@
 <meta charset="UTF-8"> 
 <html>
     <head>
-        <title>Visited</title>
+        <title>Navitas</title>
         <link rel="stylesheet" type="text/css" href="../css/indexStyles.css">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
 			integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
@@ -36,7 +36,11 @@
 			
 			var locations = [];
 			locations.push({ lat: 42.80, lng: 64.5, type: "town", image: "../images/dndmap/Orsus_New_Navitas.png" });
-			locations.push({ lat: 50.80, lng: 61.5, type: "waypoint", image: "../images/dndmap/Caves.png" });
+			
+			locations.push({ lat: 45.80, lng: 61.5, type: "waypoint", image: "../images/dndmap/Forest.png" });
+
+			locations.push({ lat: 50.00, lng: 61.5, type: "waypoint", image: "../images/dndmap/Cave_Entrance.png" });
+			locations.push({ lat: 51.80, lng: 61.5, type: "waypoint", image: "../images/dndmap/Caves.png" });
 
 			for (var i = 0; i < locations.length; i++) {
 				var marker;
@@ -50,8 +54,12 @@
 				}
 				if(locations[i].type == "waypoint") {
 					marker = L.marker([locations[i].lat, locations[i].lng]).addTo(map);
+
+					var icon = marker.options.icon;
+					icon.options.iconSize = [22, 33];
+					marker.setIcon(icon);
 				}
-				marker.bindPopup("<div style='width:300px;height:165px;'><img style='width:255px;' src='" + locations[i].image + "'/></div>")
+				marker.bindPopup("<div style='width:100%;height:100%'><img style='width:275px;' src='" + locations[i].image + "'/></div>")
 			}
         </script>
     </body>

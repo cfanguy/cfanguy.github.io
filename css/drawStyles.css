@@ -36,9 +36,14 @@ html, body, #map {
     margin-top: 30px;
 }
 
-.sketchImages {
+.drawingImages {
     width: 300px;
     height: 300px;
+}
+
+.sketchImages {
+    width: 300px;
+    height: 400px;
 }
 
 .emojiImages {

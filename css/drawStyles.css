@@ -12,6 +12,10 @@ html, body, #map {
     margin-top: 15px;
 }
 
+.top {
+    font-size: larger;
+}
+
 .fullWidth {
     width: 100%;
 }

@@ -68,6 +68,12 @@ html, body, #map {
     height: 20em;
 }
 
+.sketchImagesSquare {
+    width: 15em;
+    height: 15em;
+    padding-bottom: 5em;
+}
+
 .emojiImages {
     width: 5em;
     height: 5em;

@@ -1,2 +1,2 @@
-# cfanguy.github.io
+# cfanguy.pages
 

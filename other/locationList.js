@@ -31,4 +31,6 @@ var data = [{"x":"-87.88640","y":"30.6311","event":"Work","city":"Daphne"},
 {"x":"-95.38310","y":"29.7628","event":"MS TechEd 2014","city":"Houston"},
 {"x":"-89.330045","y":"45.295830","event":"Work","city":"Treehaven"},
 {"x":"-93.264366","y":"44.977486","event":"Work","city":"Minneapolis"},
-{"x":"-97.74310","y":"30.2672","event":"Work","city":"Austin"}]
+{"x":"-97.74310","y":"30.2672","event":"Work","city":"Austin"},
+{"x":"-81.034722","y":"34.000556","event":"Work","city":"Columbia"},
+]

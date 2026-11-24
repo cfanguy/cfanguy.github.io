@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>MapImageLayer Test</title>
+        <script type="module" src="https://js.arcgis.com/5.2/"></script>
+        <script src='locationList.js'></script>
+        <style>
+            html,
+            body {
+                height: 100%;
+                margin: 0;
+            }
+
+            #layerOptionsBlock {
+                height: 100%;
+                width: 300px;
+                overflow: auto;
+            }
+
+            .sideBlock {
+                color: white;
+            }
+        </style>
+    </head>
+     <body class="calcite-mode-dark">
+        <script type="module">
+
+            const [Map, Graphic] = await $arcgis.import([
+                "@arcgis/core/Map.js",
+                "@arcgis/core/Graphic.js",
+            ]);
+
+            const map = new Map({
+                basemap: "gray-vector",
+            });
+
+            const viewElement = document.querySelector("arcgis-map");
+            viewElement.map = map;            
+            viewElement.center = "-95, 33.4";
+            viewElement.zoom = "4";
+            viewElement.constraints = {
+                minZoom: 3,
+                maxZoom: 12
+            };
+
+            await viewElement.viewOnReady();
+
+            const markerSymbol = {
+                type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+                color: [177,12,182],
+                size: 6,
+                style: "circle",
+            };
+
+            var locations = [];
+			for(var i in data) {
+				var item = data[i];
+
+				//locations.push({ x: item.x, y: item.y, event: item.event, loc: item.city });
+
+                const point = {
+                    type: "point",
+                    x: item.x,
+                    y: item.y,
+                };
+
+                const pointGraphic = new Graphic({
+                    geometry: point,
+                    symbol: markerSymbol,
+                    attributes: {
+                        Event: item.event,
+                        Location: item.city,
+                    },
+                    popupTemplate: {
+                        // Add a popup so users can view the graphic's attributes
+                        // when clicked. It autocasts as new PopupTemplate().
+                        title: "Event",
+                        content: [
+                            {
+                                type: "fields",
+                                fieldInfos: [{ fieldName: "Event" }, { fieldName: "Location" }],
+                            },
+                        ],
+                    },
+                });
+
+                viewElement.graphics.add(pointGraphic);
+			}
+
+            
+
+        </script>
+
+        <calcite-shell>
+            <arcgis-map id="map-element">
+                <arcgis-zoom slot="top-left"></arcgis-zoom>
+                <arcgis-popup slot="popup"></arcgis-popup>
+            </arcgis-map>
+        </calcite-shell>
+    </body>
+</html>
